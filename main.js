@@ -1,28 +1,30 @@
-// imports http module, specified that I wanted node:http
 const http = require("node:http");
-// store http's creatServer method into a variable
-const createServer = http.createServer;
+const axios = require("axios");
 
-// Can also do this in one line, see below.. this will only extract the "createServer" function from the http module
-// const { createServer } = require("node:http");
 
-// this hostname/port I think is typically used for local development, might have to change later?
 const hostname = "127.0.0.1";
 const port = 3000;
 
+
+
 // Basically creating the server in a callback function.
-const server = createServer((request, response) => {
-    // statusCode 200 is the http way of saying "success"
-    response.statusCode = 200;
+const server = http.createServer(async (request, response) => {
+    response.setHeader("Content-Type", "application/json");
 
-    // this setHeader is used to set the content type, but it seems like it can be used for lots of file types
-    response.setHeader('Content-Type', 'text/plain');
+    try {
+        const apiResponse = await axios.get("https://www.fruityvice.com/api/fruit/apple");
 
-    // response.end is required, this is where we can display the string, or else if it's a different file type this is where the file name/path goes
-    response.end('Hello World');
-})
+        response.statusCode = 200;
+        response.end(JSON.stringify(apiResponse.data));
+    } catch (error) {
+        response.statusCode = 500;
+        response.end(JSON.stringify({ error: "Failed to fetch data", message: error.message}));
+    }
 
-// this listens for the server function to be successfully executed, then server.listen will log to the console
+});
+
 server.listen(port, hostname, () => {
     console.log(`Server successfully running at http://${hostname}:${port}/`);
 });
+
+
