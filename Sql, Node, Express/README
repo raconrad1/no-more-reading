@@ -1,0 +1,6 @@
+These files were used as practice to look at another approach to the project.
+
+database.js is where the server is linked with MySQL. This is different than the approach in the main.js file, where we create an http server instead.
+this file also includes functions with MySQL queries, which are then exported to app.js for use.
+
+app.js is where the express application is created and is managed by simple get and pull request(s) using those exported functions from database.js.
