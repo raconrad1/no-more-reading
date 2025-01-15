@@ -1,0 +1,4 @@
+main.js contains the creation of an HTTP server and uses axios to make api calls to the external fruit library.
+
+It is simply used to create a single http GET request using the "fruit" variable, and fetches that fruit object and displays it as a json response.
+If an error occurs, the server returns the 500 Internal server error and a json format error message.
