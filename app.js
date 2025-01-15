@@ -20,7 +20,7 @@ app.post("/notes", async (req, res) => {
     res.status(201).send(note);
 })
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
