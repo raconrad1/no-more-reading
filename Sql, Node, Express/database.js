@@ -1,5 +1,6 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 
 // createPool is used to manage a pool of mysql connections, using the .env variables in my own .env file to create a connection on my local host without that information displayed in the source code.
@@ -7,32 +8,42 @@ const pool = mysql.createPool( {
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE || "notes_app"
+    database: process.env.MYSQL_DATABASE
 }).promise();
 
-//Returns an array of note objects
-export async function getNotes() {
-    const [rows] = await pool.query("SELECT * FROM notes");
-    return rows;
+async function fetchData() {
+    try {
+        const fruitResponse = await axios.get(`https://www.fruityvice.com/api/fruit/`);
+        return JSON.stringify(fruitResponse.data);
+    } catch (error) {
+        console.error(`Error fetching data`, error);
+    }
 }
 
-// Returns a single note object given the id requested by the user during the HTTP request
-export async function getNote(id) {
-    const [rows] = await pool.query(`
+//Returns an array of fruit objects
+export async function getFruits() {
+    const [res] = await pool.query("SELECT * FROM fruits");
+    return res;
+}
+
+// Returns a single fruit via name
+export async function getFruit(name) {
+    const [res] = await pool.query(`
     SELECT * 
-    FROM notes
-    WHERE id = ?
-    `, [id]);
-    return rows[0];
+    FROM fruits
+    WHERE name = ?
+    `, [name]);
+    return res[0];
 }
 
 // Creates a new note given the user's title and contents, then returns the new note object
-export async function createNote(title, contents) {
-    const [result] = await pool.query(`
-    INSERT INTO notes (title, contents)
-    VALUES (?, ?)
-    `, [title, contents]);
-    const id = result.insertId;
-    return getNote(id);
-}
+// Comment this out for now since it is not relevant to the fruit app
+// export async function createNote(title, contents) {
+//     const [result] = await pool.query(`
+//     INSERT INTO notes (title, contents)
+//     VALUES (?, ?)
+//     `, [title, contents]);
+//     const id = result.insertId;
+//     return getNote(id);
+// }
 
