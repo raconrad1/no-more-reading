@@ -27,12 +27,21 @@ export async function getFruits() {
 }
 
 // Returns a single fruit via name
-export async function getFruit(name) {
+export async function getFruitName(name) {
     const [res] = await pool.query(`
     SELECT * 
     FROM fruits
     WHERE name = ?
     `, [name]);
+    return res[0];
+}
+
+export async function getFruitId(id) {
+    const [res] = await pool.query(`
+    SELECT *
+    FROM fruits
+    WHERE id = ?
+    `, [id]);
     return res[0];
 }
 
