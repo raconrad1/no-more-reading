@@ -1,21 +1,28 @@
 import express from "express";
-import {getFruits, getFruit} from "./database.js";
+import {getFruits, getFruitName, getFruitId} from "./database.js";
 
 // Creates the express app
 const app = express();
 app.use(express.json());
 
-// Fetch all notes (GET /fruits)
+// Fetch all fruits (GET /fruits)
 app.get("/all", async (req, res) => {
     const fruits = await getFruits();
     res.send(fruits);
 })
 
-// Fetch note by ID (GET /fruits/name)
+// Fetch fruit by name (GET /fruits/name)
 app.get("/:name", async (req, res) => {
     const name = req.params.name;
-    const fruit = await getFruit(name);
+    const fruit = await getFruitName(name);
     res.send(fruit);
+})
+
+// Fetch fruit by ID (GET /fruits/id)
+app.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    const fruit = await getFruitId(id);
+    res.send(id);
 })
 
 // Create a new note (POST /notes)
