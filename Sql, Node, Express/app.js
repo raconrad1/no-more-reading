@@ -7,22 +7,49 @@ app.use(express.json());
 
 // Fetch all fruits (GET /fruits)
 app.get("/fruits/all", async (req, res) => {
-    const fruits = await getFruits();
-    res.send(fruits);
+    try {
+        const fruits = await getFruits();
+        res.send(fruits);
+    } catch (error) {
+        console.error("Error fetching all fruits:" , error.message);
+        res.status(500).send({ error: "Internal server error" });
+    }
 })
 
 // Fetch fruit by name (GET /fruits/name)
 app.get("/fruits/name/:name", async (req, res) => {
     const name = req.params.name;
-    const fruit = await getFruitName(name);
-    res.send(fruit);
+    try {
+        const fruit = await getFruitName(name);
+        if(!fruit) {
+            return res.status(400).send({ error: "Fruit not found!" });
+        }
+
+        res.send(fruit);
+    } catch (error) {
+        console.error("Error fetching fruit by name:", error.message);
+        res.status(500).send({ error: "Internal server error" });
+    }
 })
 
 // Fetch fruit by ID (GET /fruits/id)
 app.get("/fruits/id/:id", async (req, res) => {
     const id = parseInt(req.params.id);
-    const fruit = await getFruitId(id);
-    res.send(fruit);
+    if(isNaN(id) || id <= 0) {
+        res.status(404).send({ error: "Invalid ID: ID must be a number greater than 0" });
+    }
+    try {
+        const fruit = await getFruitId(id);
+
+        if(!fruit) {
+            return res.status(404).send({ error: "Fruit not found!" });
+        }
+
+        res.send(fruit);
+    } catch (error) {
+        console.error("Error fetching fruit by ID:" ,error.message);
+        res.status(500).send({ error: "Internal server error" });
+    }
 })
 
 // Create a new note (POST /notes)
