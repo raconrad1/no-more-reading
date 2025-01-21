@@ -6,23 +6,23 @@ const app = express();
 app.use(express.json());
 
 // Fetch all fruits (GET /fruits)
-app.get("/all", async (req, res) => {
+app.get("/fruits/all", async (req, res) => {
     const fruits = await getFruits();
     res.send(fruits);
 })
 
 // Fetch fruit by name (GET /fruits/name)
-app.get("/:name", async (req, res) => {
+app.get("/fruits/name/:name", async (req, res) => {
     const name = req.params.name;
     const fruit = await getFruitName(name);
     res.send(fruit);
 })
 
 // Fetch fruit by ID (GET /fruits/id)
-app.get("/:id", async (req, res) => {
-    const id = req.params.id;
+app.get("/fruits/id/:id", async (req, res) => {
+    const id = parseInt(req.params.id);
     const fruit = await getFruitId(id);
-    res.send(id);
+    res.send(fruit);
 })
 
 // Create a new note (POST /notes)
