@@ -35,7 +35,7 @@ export async function getFruitName(name) {
     `, [name]);
     return res[0];
 }
-
+// Returns a single fruit via id
 export async function getFruitId(id) {
     const [res] = await pool.query(`
     SELECT *
