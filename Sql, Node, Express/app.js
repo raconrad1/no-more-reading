@@ -22,7 +22,7 @@ app.get("/fruits/name/:name", async (req, res) => {
     try {
         const fruit = await getFruitName(name);
         if(!fruit) {
-            return res.status(400).send({ error: "Fruit not found!" });
+            return res.status(400).send("Fruit not found!");
         }
 
         res.send(fruit);
@@ -36,13 +36,13 @@ app.get("/fruits/name/:name", async (req, res) => {
 app.get("/fruits/id/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if(isNaN(id) || id <= 0) {
-        res.status(404).send({ error: "Invalid ID: ID must be a number greater than 0" });
+        res.status(404).send("Invalid ID: ID must be a number greater than 0");
     }
     try {
         const fruit = await getFruitId(id);
 
         if(!fruit) {
-            return res.status(404).send({ error: "Fruit not found!" });
+            return res.status(404).send("Fruit not found!");
         }
 
         res.send(fruit);
