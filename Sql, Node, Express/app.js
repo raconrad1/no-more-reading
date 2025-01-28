@@ -1,11 +1,11 @@
 import express from "express";
-import {getFruits, getFruitName, getFruitId} from "./database.js";
+import {getFruits, getFruitName, getFruitId, addFruit} from "./database.js";
 
 // Creates the express app
 const app = express();
 app.use(express.json());
 
-// Fetch all fruits (GET /fruits)
+// Fetch all fruits (GET /fruits/all)
 app.get("/fruits/all", async (req, res) => {
     try {
         const fruits = await getFruits();
@@ -52,13 +52,26 @@ app.get("/fruits/id/:id", async (req, res) => {
     }
 })
 
-// Create a new note (POST /notes)
-// Comment this out for now since it is not relevant to the fruit app
-// app.post("/notes", async (req, res) => {
-//     const { title, contents } = req.body;
-//     const note = await createNote(title, contents);
-//     res.status(201).send(note);
-// })
+// Add fruit (POST /fruits/add)
+app.post("/fruits/add", async (req, res) => {
+    const {id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein} = req.body;
+
+    if (!id || !name || !family || !order || !genus || calories == null || fat == null || sugar == null || carbohydrates == null || protein == null){
+        return res.status(400).send("Missing required fields in request body!");
+    }
+
+    try {
+        const newFruit = await addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein);
+
+        res.status(201).send({
+            message: "Fruit added successfully!",
+            fruit: newFruit,
+        });
+    } catch(error) {
+        console.error("Error adding fruit:", error.message);
+        res.status(500).send({error: "Internal server error"});
+    }
+});
 
 // Error handling
 app.use((err, req, res, next) => {
