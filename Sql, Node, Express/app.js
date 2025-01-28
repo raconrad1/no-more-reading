@@ -22,9 +22,9 @@ app.get("/fruits/name/:name", async (req, res) => {
     try {
         const fruit = await getFruitName(name);
         if(!fruit) {
-            return res.status(400).send("Fruit not found!");
+            return res.status(400).send(`<center><h1 style="font-size:20px;margin-bottom: 0;margin-top: 100px">Fruit not found!</h1><br>
+            If you would like to add it, send a POST request to <code><strong>/fruits/add/${name}</strong></code> with the fruit details in the body</center>`);
         }
-
         res.send(fruit);
     } catch (error) {
         console.error("Error fetching fruit by name:", error.message);
@@ -36,13 +36,13 @@ app.get("/fruits/name/:name", async (req, res) => {
 app.get("/fruits/id/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if(isNaN(id) || id <= 0) {
-        res.status(404).send("Invalid ID: ID must be a number greater than 0");
+        return res.status(404).send(`<center><h1 style="font-size:20px;margin-bottom: 0;margin-top: 100px">Invalid ID<br></h1><p>ID must be an integer greater than zero!</p></center>`);
     }
     try {
         const fruit = await getFruitId(id);
 
         if(!fruit) {
-            return res.status(404).send("Fruit not found!");
+            return res.status(404).send(`<center><h1 style="font-size:20px;margin-bottom: 0;margin-top: 100px">Fruit not found!</h1><br><p>There is no fruit with the id ${id}</p></center>`);
         }
 
         res.send(fruit);
@@ -58,8 +58,8 @@ app.get("/fruits/family/:family", async (req, res) => {
 
     try {
         const fruit = await getFruitFamily(family);
-        if(!fruit) {
-            return res.status(404).send(`Fruit not found! There are not fruits in the database in the ${family} family.`);
+        if(fruit.length === 0) {
+            return res.status(404).send(`<center><h1 style="font-size:20px;margin-bottom: 0;margin-top: 100px">There are no fruits in the database in the "${family}" family.</h1></center>`);
         }
         res.send(fruit);
     } catch (error) {
