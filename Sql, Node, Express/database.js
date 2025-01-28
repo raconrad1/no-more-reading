@@ -11,15 +11,6 @@ const pool = mysql.createPool( {
     database: process.env.MYSQL_DATABASE
 }).promise();
 
-async function fetchData() {
-    try {
-        const fruitResponse = await axios.get(`https://www.fruityvice.com/api/fruit/`);
-        return JSON.stringify(fruitResponse.data);
-    } catch (error) {
-        console.error(`Error fetching data`, error);
-    }
-}
-
 //Returns an array of fruit objects
 export async function getFruits() {
     const [res] = await pool.query("SELECT * FROM fruits");
@@ -45,14 +36,27 @@ export async function getFruitId(id) {
     return res[0];
 }
 
-// Creates a new note given the user's title and contents, then returns the new note object
-// Comment this out for now since it is not relevant to the fruit app
-// export async function createNote(title, contents) {
-//     const [result] = await pool.query(`
-//     INSERT INTO notes (title, contents)
-//     VALUES (?, ?)
-//     `, [title, contents]);
-//     const id = result.insertId;
-//     return getNote(id);
-// }
 
+export async function addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein) {
+    try {
+        const [res] = await pool.query(`
+                    INSERT INTO fruits (id, name, family, \`order\`, genus, calories, fat, sugar, carbohydrates, protein)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein]);
+        return {
+            id,
+            name,
+            family,
+            order,
+            genus,
+            calories,
+            fat,
+            sugar,
+            carbohydrates,
+            protein
+        };
+    } catch(error) {
+        console.error("Error adding fruit:", error);
+        throw error;
+    }
+}
