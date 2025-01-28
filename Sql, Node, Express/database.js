@@ -36,6 +36,16 @@ export async function getFruitId(id) {
     return res[0];
 }
 
+// Returns an array of fruit objects via family name
+export async function getFruitFamily(family) {
+    const [res] = await pool.query(`
+    SELECT *
+    FROM fruits
+    WHERE family = ?
+    `, [family]);
+    return res
+}
+
 
 export async function addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein) {
     try {
