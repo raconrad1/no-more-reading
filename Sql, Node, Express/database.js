@@ -1,6 +1,5 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
-import axios from "axios";
 dotenv.config();
 
 // createPool is used to manage a pool of mysql connections, using the .env variables in my own .env file to create a connection on my local host without that information displayed in the source code.
@@ -46,7 +45,7 @@ export async function getFruitFamily(family) {
     return res
 }
 
-
+// Adds a fruit to the database
 export async function addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein) {
     try {
         const [res] = await pool.query(`
