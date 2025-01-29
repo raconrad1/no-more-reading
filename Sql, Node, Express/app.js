@@ -70,14 +70,14 @@ app.get("/fruits/family/:family", async (req, res) => {
 
 // Add fruit
 app.post("/fruits/add", async (req, res) => {
-    const {id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein} = req.body;
+    const {name, family, order, genus, calories, fat, sugar, carbohydrates, protein} = req.body;
 
-    if (!id || !name || !family || !order || !genus || calories == null || fat == null || sugar == null || carbohydrates == null || protein == null){
+    if (!name || !family || !order || !genus || calories == null || fat == null || sugar == null || carbohydrates == null || protein == null){
         return res.status(400).send("Missing required fields in request body!");
     }
 
     try {
-        const newFruit = await addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein);
+        const newFruit = await addFruit(name, family, order, genus, calories, fat, sugar, carbohydrates, protein);
 
         res.status(201).send({
             message: "Fruit added successfully!",

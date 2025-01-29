@@ -46,14 +46,13 @@ export async function getFruitFamily(family) {
 }
 
 // Adds a fruit to the database
-export async function addFruit(id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein) {
+export async function addFruit(name, family, order, genus, calories, fat, sugar, carbohydrates, protein) {
     try {
         const [res] = await pool.query(`
-                    INSERT INTO fruits (id, name, family, \`order\`, genus, calories, fat, sugar, carbohydrates, protein)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [id, name, family, order, genus, calories, fat, sugar, carbohydrates, protein]);
+                    INSERT INTO fruits (name, family, \`order\`, genus, calories, fat, sugar, carbohydrates, protein)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [name, family, order, genus, calories, fat, sugar, carbohydrates, protein]);
         return {
-            id,
             name,
             family,
             order,
