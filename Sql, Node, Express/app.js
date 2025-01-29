@@ -36,7 +36,7 @@ app.get("/fruits/name/:name", async (req, res) => {
 app.get("/fruits/id/:id", async (req, res) => {
     const id = parseInt(req.params.id);
     if(isNaN(id) || id <= 0) {
-        res.status(404).send("Invalid ID: ID must be a number greater than 0");
+        return res.status(404).send("Invalid ID: ID must be a number greater than 0");
     }
     try {
         const fruit = await getFruitId(id);
