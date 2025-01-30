@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import {getFruits, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
 
 // Creates the express app
@@ -96,6 +98,6 @@ app.use((err, req, res, next) => {
 })
 
 // Start the server
-app.listen(8080, () => {
+app.listen(process.env.MSQL_PORT || 8080, () => {
     console.log(`Server is running on port 8080`);
 });
