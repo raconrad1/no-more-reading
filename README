@@ -1,0 +1,6 @@
+This is the main folder for the project.
+
+database.js is where the server is linked with MySQL.
+This file includes functions with MySQL queries, which are then exported to app.js for use.
+
+app.js is where the express application is created and is managed by get and post request(s) using those exported functions from database.js.
