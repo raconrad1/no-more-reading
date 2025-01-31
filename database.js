@@ -4,10 +4,11 @@ dotenv.config();
 
 // createPool is used to manage a pool of mysql connections, using the .env variables in my own .env file to create a connection on my local host without that information displayed in the source code.
 const pool = mysql.createPool( {
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
+    host: process.env.JAWSDB_HOST,
+    user: process.env.JAWSDB_USER,
+    password: process.env.JAWSDB_PASSWORD,
+    database: process.env.JAWSDB_DATABASE,
+    port: process.env.JAWSDB_PORT
 }).promise();
 
 //Returns an array of fruit objects
