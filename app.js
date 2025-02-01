@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
+import {getFruits, getRandomFruit, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
 
 // Creates the express app
 const app = express();
@@ -15,6 +15,16 @@ app.get("/fruits/all", async (req, res) => {
     } catch (error) {
         console.error("Error fetching all fruits:" , error.message);
         res.status(500).send({ error: "Internal server error" });
+    }
+})
+
+app.get("/fruits/random", async (req, res)=> {
+    try {
+        const fruit = await getRandomFruit();
+        res.send(fruit);
+    } catch (error) {
+        console.error("Error fetching all fruits:", error.message);
+        res.status(500).send( { error: "Internal server error" });
     }
 })
 
