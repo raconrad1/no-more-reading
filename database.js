@@ -16,8 +16,15 @@ export async function getFruits() {
     return res;
 }
 
+// Returns a single random fruit
 export async function getRandomFruit() {
     const [res] = await pool.query("SELECT * FROM fruits f ORDER BY RAND( ) LIMIT 1;");
+    return res[0];
+}
+
+// Returns an array of fruit objects, sorted by name
+export async function sortByName() {
+    const [res] = await pool.query("SELECT * FROM fruits ORDER by name");
     return res;
 }
 

@@ -1,13 +1,36 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
+import {getFruits, getRandomFruit, sortByName, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
+import {sort} from "semver";
 
 // Creates the express app
 const app = express();
 app.use(express.json());
 
-// Fetch all fruits (GET /fruits/all)
+// Load root URL
+app.get("/", async (req, res) => {
+    try {
+        const message = {
+            message: "Fruit app loaded!",
+            endpoints: {
+                allFruits: "/fruits/all",
+                randomFruit: "/fruits/random",
+                sortByName: "/fruits/sort/name",
+                fruitById: "/fruits/id/:id",
+                fruitByName: "/fruits/name/:name",
+                fruitsByFamily: "/fruits/family/:family",
+            },
+            note: "Enjoy!"
+        };
+        res.send(message);
+    } catch (error) {
+        console.error("Error loading page", error.message);
+        res.status(500).send( { error: "Internal server error" });
+    }
+})
+
+// Fetch all fruits in order by id (default)
 app.get("/fruits/all", async (req, res) => {
     try {
         const fruits = await getFruits();
@@ -18,31 +41,24 @@ app.get("/fruits/all", async (req, res) => {
     }
 })
 
+// Fetch random fruit
 app.get("/fruits/random", async (req, res)=> {
     try {
         const fruit = await getRandomFruit();
         res.send(fruit);
     } catch (error) {
-        console.error("Error fetching all fruits:", error.message);
+        console.error("Error fetching a random fruit:", error.message);
         res.status(500).send( { error: "Internal server error" });
     }
 })
 
-app.get("/", async (req, res) => {
+// Sort all fruits by name
+app.get("/fruits/sort/name", async (req, res) => {
     try {
-        const message = {
-            message: "Fruit app loaded!",
-            endpoints: {
-                allFruits: "/fruits/all",
-                fruitById: "/fruits/id/:id",
-                fruitByName: "/fruits/name/:name",
-                fruitsByFamily: "/fruits/family/:family",
-            },
-            note: "Enjoy!"
-        };
-        res.send(message);
+        const fruits = await sortByName();
+        res.send(fruits);
     } catch (error) {
-        console.error("Error loading page", error.message);
+        console.error("Error sorting fruits", error.message);
         res.status(500).send( { error: "Internal server error" });
     }
 })
