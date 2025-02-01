@@ -18,6 +18,25 @@ app.get("/fruits/all", async (req, res) => {
     }
 })
 
+app.get("/", async (req, res) => {
+    try {
+        const message = {
+            message: "Fruit app loaded!",
+            endpoints: {
+                allFruits: "/fruits/all",
+                fruitById: "/fruits/id/:id",
+                fruitByName: "/fruits/name/:name",
+                fruitsByFamily: "/fruits/family/:family",
+            },
+            note: "Enjoy!"
+        };
+        res.send(message);
+    } catch (error) {
+        console.error("Error loading page", error.message);
+        res.status(500).send( { error: "Internal server error" });
+    }
+})
+
 // Fetch fruit by name
 app.get("/fruits/name/:name", async (req, res) => {
     const name = req.params.name;
