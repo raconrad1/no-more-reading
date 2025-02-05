@@ -35,3 +35,7 @@ input {
 label {
     margin: 0
 }
+
+#nameSortArrow, button {
+    cursor: pointer;
+}
