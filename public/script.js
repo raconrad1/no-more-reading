@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("allFruits").addEventListener("click", getFruits);
-    document.querySelector("form").addEventListener("submit", getFruitName);
+    document.getElementById("fruitNameSubmit").addEventListener("click", getFruitName);
+    document.getElementById("familyNameSubmit").addEventListener("click", getFamilyName);
+    document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
 });
 
 function updateTable(fruits) {
@@ -15,10 +17,10 @@ function updateTable(fruits) {
                 <td>${fruit.order}</td>
                 <td>${fruit.genus}</td>
                 <td>${fruit.calories}</td>
-                <td>${fruit.fat}</td>
-                <td>${fruit.sugar}</td>
-                <td>${fruit.carbohydrates}</td>
-                <td>${fruit.protein}</td>
+                <td>${fruit.fat}g</td>
+                <td>${fruit.sugar}g</td>
+                <td>${fruit.carbohydrates}g</td>
+                <td>${fruit.protein}g</td>
             </tr>`;
         tableBody.innerHTML += row;
     });
@@ -37,6 +39,22 @@ async function getFruits() {
 
     } catch (error) {
         console.error("Error fetching fruits:", error);
+    }
+}
+
+async function getRandomFruit() {
+    try {
+        const response = await fetch("/fruits/random");
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch a random fruit: ${response.statusText}`);
+        }
+
+        const fruit = await response.json();
+        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
+        updateTable(fruitArray);
+    } catch (error) {
+        console.error("Error fetching a random fruit", error);
     }
 }
 
@@ -60,6 +78,29 @@ async function getFruitName(event) {
 
     } catch (error) {
         console.error("Error fetching fruit by name", error);
+    }
+}
+
+async function getFamilyName(event) {
+    event.preventDefault();
+    const familyName = document.getElementById("familyName").value.trim();
+    if (!familyName) {
+        console.log("Search cannot be empty");
+        return;
+    }
+    try {
+        const response = await fetch(`/fruits/family/${familyName}`);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch the fruits by family: ${response.statusText}`);
+        }
+        const fruit = await response.json();
+
+        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
+        updateTable(fruitArray);
+
+    } catch (error) {
+        console.error("Error fetching fruits by family", error);
     }
 }
 
