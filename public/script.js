@@ -14,6 +14,11 @@ function updateTable(fruits) {
                 <td>${fruit.family}</td>
                 <td>${fruit.order}</td>
                 <td>${fruit.genus}</td>
+                <td>${fruit.calories}</td>
+                <td>${fruit.fat}</td>
+                <td>${fruit.sugar}</td>
+                <td>${fruit.carbohydrates}</td>
+                <td>${fruit.protein}</td>
             </tr>`;
         tableBody.innerHTML += row;
     });
