@@ -2,10 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import {getFruits, getRandomFruit, sortByName, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
-import {sort} from "semver";
+import path from "path";
 
 // Creates the express app
 const app = express();
+app.use(express.static(path.join(process.cwd(), "public")));
+
 app.use(express.json());
 
 // Load root URL
