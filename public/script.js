@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("fruitNameSubmit").addEventListener("click", getFruitName);
     document.getElementById("familyNameSubmit").addEventListener("click", getFamilyName);
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
+    document.getElementById("nameSortArrow").addEventListener("click", sortByName);
 });
 
 function updateTable(fruits) {
@@ -104,3 +105,39 @@ async function getFamilyName(event) {
     }
 }
 
+async function sortByName() {
+    if (sort === "none") {
+        updateSortStatus();
+        return getFruits();
+    } else {
+        try {
+            const response = await fetch(`/fruits/sort${sort}/name`);
+            updateSortStatus();
+
+            if (!response.ok) {
+                throw new Error(`Failed to sort fruits by name: ${response.statusText}`);
+            }
+
+            const fruits = await response.json();
+            updateTable(fruits);
+        } catch (error) {
+            console.error("Error sorting fruits by name", error);
+        }
+    }
+}
+
+let sort = "Asc";
+let arrow = "↕";
+const updateSortStatus = () => {
+    if (sort === "none") {
+        sort = "Asc";
+        arrow = "↕";
+    } else if (sort === "Asc") {
+        sort = "Desc";
+        arrow = "^";
+    } else if (sort === "Desc") {
+        sort = "none";
+        arrow = "v";
+    }
+    document.getElementById("nameSortArrow").textContent = arrow;
+}
