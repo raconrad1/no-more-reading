@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("allFruits").addEventListener("click", getFruits);
-    document.getElementById("fruitNameSubmit").addEventListener("click", getFruitName);
-    document.getElementById("familyNameSubmit").addEventListener("click", getFamilyName);
+    document.getElementById("fruitNameSubmit").addEventListener("click", searchByName);
+    document.getElementById("familyNameSubmit").addEventListener("click", searchByFamily);
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
     document.getElementById("nameSortArrow").addEventListener("click", sortByName);
+    document.getElementById("idSubmit").addEventListener("click", searchById);
 });
 
 function updateTable(fruits) {
@@ -24,7 +25,9 @@ function updateTable(fruits) {
                 <td>${fruit.protein}g</td>
             </tr>`;
         tableBody.innerHTML += row;
+
     });
+    clearSearchFields();
 }
 
 async function getFruits() {
@@ -59,7 +62,7 @@ async function getRandomFruit() {
     }
 }
 
-async function getFruitName(event) {
+async function searchByName(event) {
     event.preventDefault();
     const fruitName = document.getElementById("fruitName").value.trim();
     if (!fruitName) {
@@ -82,7 +85,7 @@ async function getFruitName(event) {
     }
 }
 
-async function getFamilyName(event) {
+async function searchByFamily(event) {
     event.preventDefault();
     const familyName = document.getElementById("familyName").value.trim();
     if (!familyName) {
@@ -105,6 +108,32 @@ async function getFamilyName(event) {
     }
 }
 
+async function searchById(event) {
+    event.preventDefault();
+    const id = document.getElementById("id").value.trim();
+    if (!id) {
+        console.log("Search cannot be empty");
+        return;
+    }
+    try {
+        const response = await fetch(`/fruits/id/${id}`)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch the fruit by id: ${response.statusText}`);
+        }
+
+        const fruit = await response.json();
+        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
+        updateTable(fruitArray);
+
+    } catch (error) {
+        console.error("Error fetching fruit by id", error);
+    }
+}
+
+
+
+
+
 async function sortByName() {
     if (sort === "none") {
         updateSortStatus();
@@ -125,6 +154,16 @@ async function sortByName() {
         }
     }
 }
+
+
+function clearSearchFields() {
+    const searchFields = document.querySelectorAll(".searchField");
+    searchFields.forEach(field => {
+        field.value = "";
+        field.blur();
+    });
+}
+
 
 let sort = "Asc";
 let arrow = "↕";
