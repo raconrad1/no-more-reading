@@ -1,11 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, sortByName, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
-import {sort} from "semver";
+import {getFruits, getRandomFruit, sortByNameAsc, sortByNameDesc, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
+import path from "path";
 
 // Creates the express app
 const app = express();
+app.use(express.static(path.join(process.cwd(), "public")));
+
 app.use(express.json());
 
 // Load root URL
@@ -52,13 +54,24 @@ app.get("/fruits/random", async (req, res)=> {
     }
 })
 
-// Sort all fruits by name
-app.get("/fruits/sort/name", async (req, res) => {
+// Sort all fruits by name ascending
+app.get("/fruits/sortAsc/name", async (req, res) => {
     try {
-        const fruits = await sortByName();
+        const fruits = await sortByNameAsc();
         res.send(fruits);
     } catch (error) {
-        console.error("Error sorting fruits", error.message);
+        console.error("Error sorting fruits asc", error.message);
+        res.status(500).send( { error: "Internal server error" });
+    }
+})
+
+// Sort all fruits by name descending
+app.get("/fruits/sortDesc/name", async (req, res) => {
+    try {
+        const fruits = await sortByNameDesc();
+        res.send(fruits);
+    } catch (error) {
+        console.error("Error sorting fruits desc", error.message);
         res.status(500).send( { error: "Internal server error" });
     }
 })

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fruits app</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <button id="allFruits">Load all fruits</button>
+    <button id="randomFruit">Random Fruit</button>
+    <form>
+        <label for="id">Search by ID:</label>
+        <input type= "number" id="id" class="searchField">
+        <input type="submit" value="Search" id="idSubmit">
+    </form>
+    <form>
+        <label for="fruitName">Search by Name:</label>
+        <input type= "text" id="fruitName" class="searchField">
+        <input type="submit" value="Search" id="fruitNameSubmit">
+    </form>
+    <form>
+        <label for="familyName">Search by Family:</label>
+        <input type= "text" id="familyName" class="searchField">
+        <input type="submit" value="Search" id="familyNameSubmit">
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name <span id="nameSortArrow">↕</span></th>
+            <th>Family</th>
+            <th>Order</th>
+            <th>Genus</th>
+            <th>Calories</th>
+            <th>Fat</th>
+            <th>Sugar</th>
+            <th>Carbohydrates</th>
+            <th>Protein</th>
+        </tr>
+        </thead>
+        <tbody id="fruitTable">
+        <!-- Fruit data will be inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Link external JavaScript file -->
+    <script src="script.js"></script>
+    </body>
+    </html>
