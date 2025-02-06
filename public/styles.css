@@ -39,3 +39,10 @@ label {
 #nameSortArrow, button {
     cursor: pointer;
 }
+
+/*remove increment arrows in search field*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
