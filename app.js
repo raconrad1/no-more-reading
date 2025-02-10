@@ -10,27 +10,6 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 app.use(express.json());
 
-// Load root URL
-app.get("/", async (req, res) => {
-    try {
-        const message = {
-            message: "Fruit app loaded!",
-            endpoints: {
-                allFruits: "/fruits/all",
-                randomFruit: "/fruits/random",
-                sortByName: "/fruits/sort/name",
-                fruitById: "/fruits/id/:id",
-                fruitByName: "/fruits/name/:name",
-                fruitsByFamily: "/fruits/family/:family",
-            },
-            note: "Enjoy!"
-        };
-        res.send(message);
-    } catch (error) {
-        console.error("Error loading page", error.message);
-        res.status(500).send( { error: "Internal server error" });
-    }
-})
 
 // Fetch all fruits in order by id (default)
 app.get("/fruits/all", async (req, res) => {
