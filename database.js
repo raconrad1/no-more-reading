@@ -10,7 +10,7 @@ const pool = mysql.createPool( {
     database: process.env.MYSQL_DATABASE,
 }).promise();
 
-//Returns an array of fruit objects
+//Returns an array of all fruit objects
 export async function getFruits() {
     const [res] = await pool.query("SELECT * FROM fruits");
     return res;
@@ -33,33 +33,19 @@ export async function sortByNameDesc() {
     return res;
 }
 
-// Returns a single fruit via name
-export async function getFruitName(name) {
+// Searches fruit by name, id, family, order, or genus
+export async function searchFruit(query) {
     const [res] = await pool.query(`
-    SELECT * 
-    FROM fruits
-    WHERE name = ?
-    `, [name]);
-    return res[0];
-}
-// Returns a single fruit via id
-export async function getFruitId(id) {
-    const [res] = await pool.query(`
-    SELECT *
-    FROM fruits
-    WHERE id = ?
-    `, [id]);
-    return res[0];
-}
+        SELECT *
+        FROM fruits
+        WHERE id = ?
+           OR LOWER(name) = LOWER(?)
+           OR LOWER(family) = LOWER(?)
+           OR LOWER(\`order\`) = LOWER(?)
+           OR LOWER(genus) = LOWER(?)
+    `, [query, query, query, query, query, query]);
 
-// Returns an array of fruit objects via family name
-export async function getFruitFamily(family) {
-    const [res] = await pool.query(`
-    SELECT *
-    FROM fruits
-    WHERE family = ?
-    `, [family]);
-    return res
+    return res.length ? res : null;
 }
 
 // Adds a fruit to the database
