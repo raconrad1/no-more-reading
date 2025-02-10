@@ -1,16 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("allFruits").addEventListener("click", getFruits);
-    document.getElementById("fruitNameSubmit").addEventListener("click", searchByName);
-    document.getElementById("familyNameSubmit").addEventListener("click", searchByFamily);
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
     document.getElementById("nameSortArrow").addEventListener("click", sortByName);
-    document.getElementById("idSubmit").addEventListener("click", searchById);
+    document.getElementById("searchSubmit").addEventListener("click", searchFruits);
 });
 
 function updateTable(fruits) {
     const tableBody = document.getElementById("fruitTable");
     tableBody.innerHTML = "";
-
+    console.log(fruits);
     fruits.forEach(fruit => {
         const row = `<tr>
                 <td>${fruit.id}</td>
@@ -62,74 +60,28 @@ async function getRandomFruit() {
     }
 }
 
-async function searchByName(event) {
+async function searchFruits(event) {
     event.preventDefault();
-    const fruitName = document.getElementById("fruitName").value.trim();
-    if (!fruitName) {
+    const query = document.getElementById("searchInput").value.trim();
+
+    if (!query) {
         console.log("Search cannot be empty");
         return;
     }
+
     try {
-        const response = await fetch(`/fruits/name/${fruitName}`);
-
+        const response = await fetch(`fruits/search/${query}`);
         if (!response.ok) {
-            throw new Error(`Failed to fetch the fruit: ${response.statusText}`);
-        }
-        const fruit = await response.json();
-
-        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
-        updateTable(fruitArray);
-
-    } catch (error) {
-        console.error("Error fetching fruit by name", error);
-    }
-}
-
-async function searchByFamily(event) {
-    event.preventDefault();
-    const familyName = document.getElementById("familyName").value.trim();
-    if (!familyName) {
-        console.log("Search cannot be empty");
-        return;
-    }
-    try {
-        const response = await fetch(`/fruits/family/${familyName}`);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch the fruits by family: ${response.statusText}`);
-        }
-        const fruit = await response.json();
-
-        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
-        updateTable(fruitArray);
-
-    } catch (error) {
-        console.error("Error fetching fruits by family", error);
-    }
-}
-
-async function searchById(event) {
-    event.preventDefault();
-    const id = document.getElementById("id").value.trim();
-    if (!id) {
-        console.log("Search cannot be empty");
-        return;
-    }
-    try {
-        const response = await fetch(`/fruits/id/${id}`)
-        if (!response.ok) {
-            throw new Error(`Failed to fetch the fruit by id: ${response.statusText}`);
+            throw new Error(`failed to fetch fruit ${response.statusText}`);
         }
 
         const fruit = await response.json();
         const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
         updateTable(fruitArray);
-
     } catch (error) {
-        console.error("Error fetching fruit by id", error);
+        console.error("Error fetching fruit", error);
     }
 }
-
 
 
 

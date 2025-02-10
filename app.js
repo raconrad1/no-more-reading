@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, sortByNameAsc, sortByNameDesc, getFruitName, getFruitId, getFruitFamily, addFruit} from "./database.js";
+import {getFruits, getRandomFruit, sortByNameAsc, sortByNameDesc, searchFruit, addFruit} from "./database.js";
 import path from "path";
 
 // Creates the express app
@@ -76,57 +76,22 @@ app.get("/fruits/sortDesc/name", async (req, res) => {
     }
 })
 
-// Fetch fruit by name
-app.get("/fruits/name/:name", async (req, res) => {
-    const name = req.params.name;
+// Fetch fruit by search input
+app.get("/fruits/search/:query", async (req, res) => {
+    const query = req.params.query.trim();
     try {
-        const fruit = await getFruitName(name);
-        if(!fruit) {
-            return res.status(400).send("Fruit not found!");
-        }
+        const fruits = await searchFruit(query); // Use the unified search function
 
-        res.send(fruit);
+        if (!fruits) {
+            return res.status(404).send(`No fruits found matching: ${query}`);
+        }
+        res.send(fruits);
+
     } catch (error) {
-        console.error("Error fetching fruit by name:", error.message);
+        console.error("Error fetching fruits:", error.message);
         res.status(500).send({ error: "Internal server error" });
     }
-})
-
-// Fetch fruit by ID
-app.get("/fruits/id/:id", async (req, res) => {
-    const id = parseInt(req.params.id);
-    if(isNaN(id) || id <= 0) {
-        return res.status(404).send("Invalid ID: ID must be a number greater than 0");
-    }
-    try {
-        const fruit = await getFruitId(id);
-
-        if(!fruit) {
-            return res.status(404).send("Fruit not found!");
-        }
-
-        res.send(fruit);
-    } catch (error) {
-        console.error("Error fetching fruit by ID:" ,error.message);
-        res.status(500).send({ error: "Internal server error" });
-    }
-})
-
-// Fetch fruit by family name
-app.get("/fruits/family/:family", async (req, res) => {
-    const family = req.params.family;
-
-    try {
-        const fruit = await getFruitFamily(family);
-        if(!fruit) {
-            return res.status(404).send(`Fruit not found! There are not fruits in the database in the ${family} family.`);
-        }
-        res.send(fruit);
-    } catch (error) {
-        console.error("Error fetching fruit by family:", error.message);
-        res.status(500).send({ error: "Internal server error"});
-    }
-})
+});
 
 // Add fruit
 app.post("/fruits/add", async (req, res) => {
