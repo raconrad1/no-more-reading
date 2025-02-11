@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
 });
 
+const fullTable = document.getElementById("fullTable");
+fullTable.style.display = "none";
+
 function updateTable(fruits) {
     const tableBody = document.getElementById("fruitTable");
     tableBody.innerHTML = "";
@@ -26,6 +29,7 @@ function updateTable(fruits) {
 
     });
     clearSearchFields();
+    fullTable.style.display = "";
 }
 
 async function getFruits() {
