@@ -2,8 +2,41 @@
     margin: 10px
 }
 
+h1 {
+    text-align: justify;
+}
+
+h1:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
+
+#pageTitle {
+    font-family: Serif;
+    font-size: xxx-large;
+}
+
+
 body {
     font-family: Arial, sans-serif;
+    background-color: lightcyan;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.searchField {
+    width: 250px;
+    height: 25px;
+}
+
+#searchSubmit {
+    height: 31px;
+    width: 75px;
 }
 
 table {
@@ -20,6 +53,10 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+tr {
+    background-color: #ffffff;
 }
 
 button {
