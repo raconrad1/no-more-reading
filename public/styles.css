@@ -21,6 +21,7 @@ h1:after {
 body {
     font-family: Arial, sans-serif;
     background-color: lightcyan;
+    margin-top: 25px;
 }
 
 div {
@@ -63,6 +64,14 @@ button {
     padding: 10px 15px;
     margin-top: 10px;
     font-size: 15px;
+}
+
+.mainButtons button {
+    border: none;
+}
+
+.mainButtons button:hover {
+    box-shadow: 0 9px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 #searchForm input {
@@ -150,4 +159,17 @@ input::-webkit-inner-spin-button {
 
 .modalHeader {
     align-items: center;
+}
+
+.fruitIcon {
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.2s ease-in-out;
+    font-size: 1.5em;
+}
+
+.fruitIcon:hover {
+    transform: scale(1.7);
+    cursor: pointer;
+    position:relative;
 }
