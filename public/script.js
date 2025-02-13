@@ -182,3 +182,10 @@ function openModal() {
 function closeModal() {
     modal.classList.remove("open");
 }
+
+document.querySelectorAll(".fruitIcon").forEach(icon => {
+    icon.addEventListener("click", async function () {
+        document.getElementById("searchInput").value = this.id;
+        await searchFruits(event);
+    })
+});
