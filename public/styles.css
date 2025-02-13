@@ -21,6 +21,7 @@ h1:after {
 body {
     font-family: Arial, sans-serif;
     background-color: lightcyan;
+    margin-top: 25px;
 }
 
 div {
@@ -65,7 +66,15 @@ button {
     font-size: 15px;
 }
 
-input {
+.mainButtons button {
+    border: none;
+}
+
+.mainButtons button:hover {
+    box-shadow: 0 9px 8px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#searchForm input {
     margin: 0
 }
 
@@ -82,4 +91,85 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.modalInner {
+    display:flex;
+    background-color: lightyellow;
+    text-align: center;
+    width: 600px;
+    height: 650px;
+    position: fixed;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.modal-inner h2 {
+    margin: 0;
+}
+
+.modal-inner p {
+    margin: 10px 0;
+}
+
+.modal {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open {
+    opacity: 1;
+    z-index: 999;
+}
+
+.modal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(4px);
+    z-index: -1;
+}
+
+#addFruitForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    height: 650px;
+    justify-content: space-between;
+}
+
+.addFruitInput {
+    margin: 0;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.modalHeader {
+    align-items: center;
+}
+
+.fruitIcon {
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.2s ease-in-out;
+    font-size: 1.5em;
+}
+
+.fruitIcon:hover {
+    transform: scale(1.7);
+    cursor: pointer;
+    position:relative;
 }

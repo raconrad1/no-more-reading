@@ -3,11 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
     document.getElementById("nameSortArrow").addEventListener("click", sortByName);
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
+    document.getElementById("addFruitSubmit").addEventListener("click", addFruit)
 });
 
+// Hides the whole table including headers
 const fullTable = document.getElementById("fullTable");
 fullTable.style.display = "none";
 
+// Update table to show data via fetch functions
 function updateTable(fruits) {
     const tableBody = document.getElementById("fruitTable");
     tableBody.innerHTML = "";
@@ -32,6 +35,7 @@ function updateTable(fruits) {
     fullTable.style.display = "";
 }
 
+// Get all fruits
 async function getFruits() {
     try {
         const response = await fetch("/fruits/all");
@@ -48,6 +52,7 @@ async function getFruits() {
     }
 }
 
+// Show random fruit in table
 async function getRandomFruit() {
     try {
         const response = await fetch("/fruits/random");
@@ -64,6 +69,7 @@ async function getRandomFruit() {
     }
 }
 
+// Search fruit by id, name, family, order, genus
 async function searchFruits(event) {
     event.preventDefault();
     const query = document.getElementById("searchInput").value.trim();
@@ -87,9 +93,36 @@ async function searchFruits(event) {
     }
 }
 
+// Add fruit via modal window
+async function addFruit(event) {
+    event.preventDefault();
 
+    const name = document.getElementById("nameInput").value;
+    const family = document.getElementById("familyInput").value;
+    const order = document.getElementById("orderInput").value;
+    const genus = document.getElementById("genusInput").value;
+    const calories = document.getElementById("caloriesInput").value;
+    const fat = document.getElementById("fatInput").value;
+    const sugar = document.getElementById("sugarInput").value;
+    const carbohydrates = document.getElementById("carbohydratesInput").value;
+    const protein = document.getElementById("proteinInput").value;
 
+    const response = await fetch("fruits/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, family, order, genus, calories, fat, sugar, carbohydrates, protein} )
+    })
 
+    const fruit = await response.json();
+    closeModal();
+    document.getElementById("searchInput").value = name;
+    await searchFruits(event);
+    // alert(fruit.message || "Error adding fruit");
+}
+
+// Sort all fruits by name with the arrow. Terrible.
 async function sortByName() {
     if (sort === "none") {
         updateSortStatus();
@@ -111,19 +144,10 @@ async function sortByName() {
     }
 }
 
-
-function clearSearchFields() {
-    const searchFields = document.querySelectorAll(".searchField");
-    searchFields.forEach(field => {
-        field.value = "";
-        field.blur();
-    });
-}
-
-
+// Sorting arrow stuff. I hate it. Need to change it.
 let sort = "Asc";
 let arrow = "↕";
-const updateSortStatus = () => {
+function updateSortStatus() {
     if (sort === "none") {
         sort = "Asc";
         arrow = "↕";
@@ -136,3 +160,32 @@ const updateSortStatus = () => {
     }
     document.getElementById("nameSortArrow").textContent = arrow;
 }
+
+
+// Clear the search field
+function clearSearchFields() {
+    const searchFields = document.querySelectorAll(".searchField");
+    searchFields.forEach(field => {
+        field.value = "";
+        field.blur();
+    });
+}
+
+// Add fruit modal window
+const modal = document.getElementById("modal");
+document.getElementById("openModal").addEventListener("click", openModal);
+document.getElementById("closeModal").addEventListener("click", closeModal);
+
+function openModal() {
+    modal.classList.add("open");
+}
+function closeModal() {
+    modal.classList.remove("open");
+}
+
+document.querySelectorAll(".fruitIcon").forEach(icon => {
+    icon.addEventListener("click", async function () {
+        document.getElementById("searchInput").value = this.id;
+        await searchFruits(event);
+    })
+});

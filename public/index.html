@@ -8,33 +8,84 @@
     </head>
     <body>
     <h1>
-        🍒
-        🍓
-        🍋
-        🍇
-        🍍
-        🍌
-        🥑
-        🍏
-        🍅
-        🍈
+        <span class="fruitIcon" id="cherry">🍒</span>
+        <span class="fruitIcon" id="strawberry">🍓</span>
+        <span class="fruitIcon" id="lemon">🍋</span>
+        <span class="fruitIcon" id="grape">🍇</span>
+        <span class="fruitIcon" id="pineapple">🍍</span>
+        <span class="fruitIcon" id="banana">🍌</span>
+        <span class="fruitIcon" id="avocado">🥑</span>
+        <span class="fruitIcon" id="greenApple">🍏</span>
+        <span class="fruitIcon" id="tomato">🍅</span>
+        <span class="fruitIcon" id="melon">🍈</span>
         <span id="pageTitle">Fruits App</span>
-        🥝
-        🥭
-        🥥
-        🍋‍🟩
-        🫐
-        🫒
-        🍑
-        🍐
-        🍊
+        <span class="fruitIcon" id="kiwi">🥝</span>
+        <span class="fruitIcon" id="mango">🥭</span>
+        <span class="fruitIcon" id="coconut">🥥</span>
+        <span class="fruitIcon" id="lime">🍋‍🟩</span>
+        <span class="fruitIcon" id="blueberry">🫐</span>
+        <span class="fruitIcon" id="olive">🫒</span>
+        <span class="fruitIcon" id="peach">🍑</span>
+        <span class="fruitIcon" id="pear">🍐</span>
+        <span class="fruitIcon" id="orange">🍊</span>
+        <span class="fruitIcon" id="watermelon">🍉</span>
     </h1>
-    <div>
+    <div class="mainButtons">
         <button id="allFruits">Load all fruits</button>
         <button id="randomFruit">Random Fruit</button>
+        <button id="openModal">Add Fruit</button>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modalInner">
+            <div class="modalHeader">
+                <h2>Add a fruit!</h2>
+                <button id="closeModal">Close</button>
+            </div>
+            <p>Enter the fruit information below, hit submit to add it to the database.</p>
+            <form id="addFruitForm">
+                <div class="addFruitInput">
+                    <label for="nameInput">Name: </label>
+                    <input id="nameInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="familyInput">Family: </label>
+                    <input id="familyInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="orderInput">Order: </label>
+                    <input id="orderInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="genusInput">Genus: </label>
+                    <input id="genusInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="caloriesInput">Calories: </label>
+                    <input id="caloriesInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="fatInput">Fat: </label>
+                    <input id="fatInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="sugarInput">Sugar: </label>
+                    <input id="sugarInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="carbohydratesInput">Carbohydrates: </label>
+                    <input id="carbohydratesInput" class="inputField">
+                </div>
+                <div class="addFruitInput">
+                    <label for="proteinInput">Protein: </label>
+                    <input id="proteinInput" class="inputField">
+                </div>
+                <input type="submit" value="Add Fruit" id="addFruitSubmit">
+
+            </form>
+        </div>
 
     </div>
-    <form>
+    <form id="searchForm">
         <label for="searchInput"></label>
         <input id="searchInput" class="searchField">
         <input type="submit" value="Search" id="searchSubmit">
