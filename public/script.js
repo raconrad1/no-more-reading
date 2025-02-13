@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
     document.getElementById("nameSortArrow").addEventListener("click", sortByName);
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
-    document.getElementById("addFruitSubmit").addEventListener("click", addFruit)
+    document.getElementById("addFruitSubmit").addEventListener("click", addFruit);
 });
 
 // Hides the whole table including headers
@@ -75,6 +75,7 @@ async function searchFruits(event) {
     const query = document.getElementById("searchInput").value.trim();
 
     if (!query) {
+        showSearchError("Search cannot be empty");
         console.log("Search cannot be empty");
         return;
     }
@@ -82,6 +83,7 @@ async function searchFruits(event) {
     try {
         const response = await fetch(`fruits/search/${query}`);
         if (!response.ok) {
+            showSearchError("Fruit not found");
             throw new Error(`failed to fetch fruit ${response.statusText}`);
         }
 
@@ -189,3 +191,13 @@ document.querySelectorAll(".fruitIcon").forEach(icon => {
         await searchFruits(event);
     })
 });
+
+function showSearchError(error) {
+    const message = document.getElementById("searchErrorMessage");
+    message.textContent = error;
+    message.style.visibility = "visible";
+    clearSearchFields();
+    setTimeout(() => {
+        message.style.visibility = "hidden";
+    }, 3000);
+}

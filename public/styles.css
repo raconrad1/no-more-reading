@@ -24,7 +24,7 @@ body {
     margin-top: 25px;
 }
 
-div {
+.mainButtons, #modal {
     display: flex;
     justify-content: center;
     margin: 15px;
@@ -172,4 +172,16 @@ input::-webkit-inner-spin-button {
     transform: scale(1.7);
     cursor: pointer;
     position:relative;
+}
+
+#searchHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#searchErrorMessage {
+    color: red;
+    font-weight: 900;
+    visibility: hidden;
 }
