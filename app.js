@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, sortByNameAsc, sortByNameDesc, searchFruit, addFruit} from "./database.js";
+import {getFruits, getRandomFruit, searchFruit, addFruit} from "./database.js";
 import path from "path";
 
 // Creates the express app
@@ -33,27 +33,6 @@ app.get("/fruits/random", async (req, res)=> {
     }
 })
 
-// Sort all fruits by name ascending
-app.get("/fruits/sortAsc/name", async (req, res) => {
-    try {
-        const fruits = await sortByNameAsc();
-        res.send(fruits);
-    } catch (error) {
-        console.error("Error sorting fruits asc", error.message);
-        res.status(500).send( { error: "Internal server error" });
-    }
-})
-
-// Sort all fruits by name descending
-app.get("/fruits/sortDesc/name", async (req, res) => {
-    try {
-        const fruits = await sortByNameDesc();
-        res.send(fruits);
-    } catch (error) {
-        console.error("Error sorting fruits desc", error.message);
-        res.status(500).send( { error: "Internal server error" });
-    }
-})
 
 // Fetch fruit by search input
 app.get("/fruits/search/:query", async (req, res) => {
