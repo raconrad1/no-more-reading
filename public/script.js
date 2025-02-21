@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("allFruits").addEventListener("click", getFruits);
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
-    document.getElementById("nameSortArrow").addEventListener("click", sortByName);
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
     document.getElementById("addFruitSubmit").addEventListener("click", addFruit);
+    document.getElementById("openModal").addEventListener("click", openModal);
+    document.getElementById("closeModal").addEventListener("click", closeModal);
 });
 
 // Hides the whole table including headers
@@ -124,44 +125,6 @@ async function addFruit(event) {
     // alert(fruit.message || "Error adding fruit");
 }
 
-// Sort all fruits by name with the arrow. Terrible.
-async function sortByName() {
-    if (sort === "none") {
-        updateSortStatus();
-        return getFruits();
-    } else {
-        try {
-            const response = await fetch(`/fruits/sort${sort}/name`);
-            updateSortStatus();
-
-            if (!response.ok) {
-                throw new Error(`Failed to sort fruits by name: ${response.statusText}`);
-            }
-
-            const fruits = await response.json();
-            updateTable(fruits);
-        } catch (error) {
-            console.error("Error sorting fruits by name", error);
-        }
-    }
-}
-
-// Sorting arrow stuff. I hate it. Need to change it.
-let sort = "Asc";
-let arrow = "↕";
-function updateSortStatus() {
-    if (sort === "none") {
-        sort = "Asc";
-        arrow = "↕";
-    } else if (sort === "Asc") {
-        sort = "Desc";
-        arrow = "^";
-    } else if (sort === "Desc") {
-        sort = "none";
-        arrow = "v";
-    }
-    document.getElementById("nameSortArrow").textContent = arrow;
-}
 
 
 // Clear the search field
@@ -175,8 +138,7 @@ function clearSearchFields() {
 
 // Add fruit modal window
 const modal = document.getElementById("modal");
-document.getElementById("openModal").addEventListener("click", openModal);
-document.getElementById("closeModal").addEventListener("click", closeModal);
+
 
 function openModal() {
     modal.classList.add("open");
@@ -185,6 +147,7 @@ function closeModal() {
     modal.classList.remove("open");
 }
 
+// Listeners for fruit icons
 document.querySelectorAll(".fruitIcon").forEach(icon => {
     icon.addEventListener("click", async function () {
         document.getElementById("searchInput").value = this.id;
@@ -192,6 +155,7 @@ document.querySelectorAll(".fruitIcon").forEach(icon => {
     })
 });
 
+// Invalid search error
 function showSearchError(error) {
     const message = document.getElementById("searchErrorMessage");
     message.textContent = error;
@@ -201,3 +165,30 @@ function showSearchError(error) {
         message.style.visibility = "hidden";
     }, 3000);
 }
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const table = document.getElementById("fullTable");
+    const tbody = document.getElementById("fruitTable");
+    const nameHeader = document.getElementById("nameSortArrow");
+
+    let ascending = true; // Track sorting order
+
+    nameHeader.addEventListener("click", function () {
+        let rows = Array.from(tbody.querySelectorAll("tr"));
+
+        rows.sort((rowA, rowB) => {
+            let cellA = rowA.cells[1].textContent.trim().toLowerCase();
+            let cellB = rowB.cells[1].textContent.trim().toLowerCase();
+
+            return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        });
+
+        ascending = !ascending; // Toggle sorting order
+        nameHeader.textContent = ascending ? "↑" : "↓"; // Update sort indicator
+
+        tbody.innerHTML = ""; // Clear table body
+        rows.forEach(row => tbody.appendChild(row)); // Reinsert sorted rows
+    });
+});
