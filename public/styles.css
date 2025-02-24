@@ -99,12 +99,18 @@ input::-webkit-inner-spin-button {
     display:flex;
     background-color: lightyellow;
     text-align: center;
-    width: 600px;
-    height: 650px;
     position: fixed;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 30px;
     align-items: center;
+    border-style: solid;
+    border-color: #ffdfb8;
+    border-width: 3px;
+}
+
+.modalInner, #addFruitForm {
+    width: 550px;
+    height: 620px
 }
 
 .modal-inner h2 {
@@ -113,6 +119,7 @@ input::-webkit-inner-spin-button {
 
 .modal-inner p {
     margin: 10px 0;
+    font-size: .9em;
 }
 
 .modal {
@@ -148,19 +155,51 @@ input::-webkit-inner-spin-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 600px;
-    height: 650px;
     justify-content: space-between;
+}
+
+.inputField {
+    width: 200px;
+    margin-right: 50px;
 }
 
 .addFruitInput {
     margin: 0;
-    align-items: center;
-    justify-content: space-evenly;
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.addFruitInputLabel {
+    width: 100px;
+    text-align: left;
+    margin: auto 0 auto 50px;
+    font-size: 1.15em;
 }
 
 .modalHeader {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+
+#modalTitle {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 2.25em;
+}
+
+#closeModal {
+    margin-left: auto;
+    margin-right: 20px;
+    padding: 3px 6px 3px 6px;
+    border-radius: 7px;
+    border-style: solid;
+    border-color: #bbbbbb;
 }
 
 .fruitIcon {
