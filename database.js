@@ -61,3 +61,23 @@ export async function addFruit(name, family, order, genus, calories, fat, sugar,
         throw error;
     }
 }
+
+// Deletes a fruit given the name
+export async function deleteFruit(name) {
+    try {
+        const [res] = await pool.query(`
+            DELETE FROM fruits WHERE LOWER(name) = LOWER(?)`,
+            [name]);
+
+        console.log("database says it worked", res.affectedRows);
+
+        if (res.affectedRows === 0) {
+            console.warn("No fruit found to delete.");
+            return false;
+        }
+
+    } catch(error) {
+        console.error("Error deleting fruit:", error);
+        throw error;
+    }
+}
