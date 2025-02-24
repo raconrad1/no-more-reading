@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addFruitSubmit").addEventListener("click", addFruit);
     document.getElementById("openModal").addEventListener("click", openModal);
     document.getElementById("closeModal").addEventListener("click", closeModal);
+    document.getElementById("modal").addEventListener("click", (event) => {if(event.target === modal) {closeModal()}});
+
 });
 
 // Hides the whole table including headers
@@ -143,7 +145,7 @@ const modal = document.getElementById("modal");
 function openModal() {
     modal.classList.add("open");
 }
-function closeModal() {
+function closeModal(event) {
     modal.classList.remove("open");
 }
 
@@ -167,7 +169,7 @@ function showSearchError(error) {
 }
 
 
-
+// Another try at the search arrow
 document.addEventListener("DOMContentLoaded", function () {
     const table = document.getElementById("fullTable");
     const tbody = document.getElementById("fruitTable");
