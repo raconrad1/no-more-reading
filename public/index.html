@@ -34,12 +34,13 @@
         <button id="allFruits">Load all fruits</button>
         <button id="randomFruit">Random Fruit</button>
         <button id="openModal">Add Fruit</button>
+        <button id="deleteFruit">Delete Fruit</button>
     </div>
     <div class="modal" id="modal">
         <div class="modalInner">
             <div class="modalHeader">
                 <h2 id="modalTitle">Add a fruit!</h2>
-                <button id="closeModal">X</button>
+                <button id="closeModal">x</button>
             </div>
             <p>Enter your own fruit into the database.<br>
                 Nutritional values should be measured in grams, per 100g of the fruit.
@@ -81,13 +82,12 @@
                     <label for="proteinInput" class="addFruitInputLabel">Protein: </label>
                     <input id="proteinInput" class="inputField">
                 </div>
-                <input type="submit" value="Add Fruit" id="addFruitSubmit">
-
+                <input type="submit" id="addFruitSubmit">
             </form>
         </div>
 
     </div>
-    <div id="searchHeader">
+    <div id="inputHeader">
         <form id="searchForm">
         <label for="searchInput"></label>
         <input id="searchInput" class="searchField">
