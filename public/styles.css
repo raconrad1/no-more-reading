@@ -26,7 +26,7 @@ body {
     margin-top: 25px;
 }
 
-.mainButtons, #modal {
+.mainButtons {
     display: flex;
     justify-content: center;
     margin: 15px 15px 10px 15px;
@@ -160,7 +160,7 @@ input::-webkit-inner-spin-button {
 
 .inputField {
     width: 200px;
-    margin-right: 50px;
+    margin-right: 60px;
 }
 
 .addFruitInput {
@@ -173,8 +173,13 @@ input::-webkit-inner-spin-button {
 .addFruitInputLabel {
     width: 100px;
     text-align: left;
-    margin: auto 0 auto 50px;
+    margin: auto 0 auto 60px;
     font-size: 1.15em;
+}
+
+
+#addFruitSubmit {
+    width: 35%;
 }
 
 .modalHeader {
@@ -215,7 +220,7 @@ input::-webkit-inner-spin-button {
     position:relative;
 }
 
-#searchHeader {
+#inputHeader {
     display: flex;
     justify-content: flex-start;
     align-items: center;
