@@ -191,7 +191,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-#modalTitle {
+#addFruitModalTitle {
     flex-grow: 1;
     text-align: center;
     margin: 0;
