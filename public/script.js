@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("randomFruit").addEventListener("click", getRandomFruit);
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
     document.getElementById("addFruitSubmit").addEventListener("click", addFruit);
-    document.getElementById("openModal").addEventListener("click", openModal);
-    document.getElementById("closeModal").addEventListener("click", closeModal);
-    document.getElementById("modal").addEventListener("click", (event) => {if(event.target === modal) {closeModal()}});
-
+    document.getElementById("openAddFruitModal").addEventListener("click", openModal);
+    document.getElementById("closeAddFruitModal").addEventListener("click", closeModal);
+    document.getElementById("openDeleteFruitModal").addEventListener("click", openModal);
+    document.getElementById("closeDeleteFruitModal").addEventListener("click", closeModal);
 });
 
 // Hides the whole table including headers
@@ -127,8 +127,6 @@ async function addFruit(event) {
     // alert(fruit.message || "Error adding fruit");
 }
 
-
-
 // Clear the search field
 function clearSearchFields() {
     const searchFields = document.querySelectorAll(".searchField");
@@ -138,16 +136,26 @@ function clearSearchFields() {
     });
 }
 
-// Add fruit modal window
-const modal = document.getElementById("modal");
-
-
-function openModal() {
-    modal.classList.add("open");
+// Open any modal using data-modal value in html
+function openModal(event) {
+    const modalId = event.target.getAttribute("data-modal");
+    document.getElementById(modalId).classList.add("open");
 }
+
+// Close any modal using data-modal value in html
 function closeModal(event) {
-    modal.classList.remove("open");
+    const modalId = event.target.getAttribute("data-modal");
+    document.getElementById(modalId).classList.remove("open");
 }
+
+// Close modals by clicking outside of modal inner
+document.querySelectorAll(".modal").forEach(modal => {
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.classList.remove("open");
+        }
+    });
+});
 
 // Listeners for fruit icons
 document.querySelectorAll(".fruitIcon").forEach(icon => {
@@ -157,7 +165,7 @@ document.querySelectorAll(".fruitIcon").forEach(icon => {
     })
 });
 
-// Invalid search error
+// Invalid search error display
 function showSearchError(error) {
     const message = document.getElementById("searchErrorMessage");
     message.textContent = error;
@@ -167,7 +175,6 @@ function showSearchError(error) {
         message.style.visibility = "hidden";
     }, 3000);
 }
-
 
 // Another try at the search arrow
 document.addEventListener("DOMContentLoaded", function () {
