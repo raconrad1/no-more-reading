@@ -108,9 +108,14 @@ input::-webkit-inner-spin-button {
     border-width: 3px;
 }
 
-.modalInner, #addFruitForm {
+#modalInnerAddFruit, #addFruitForm {
     width: 550px;
     height: 620px
+}
+
+#modalInnerDeleteFruit, #deleteFruitForm {
+    width: 550px;
+    height: 350px;
 }
 
 .modal-inner h2 {
@@ -151,7 +156,7 @@ input::-webkit-inner-spin-button {
     z-index: -1;
 }
 
-#addFruitForm {
+#addFruitForm, #deleteFruitForm {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -178,8 +183,9 @@ input::-webkit-inner-spin-button {
 }
 
 
-#addFruitSubmit {
+#addFruitSubmit, #deleteFruitSubmit {
     width: 35%;
+    cursor: pointer;
 }
 
 

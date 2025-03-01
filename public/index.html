@@ -37,7 +37,7 @@
         <button id="openDeleteFruitModal" data-modal="deleteFruitModal">Delete Fruit</button>
     </div>
     <div class="modal" id="addFruitModal">
-        <div class="modalInner">
+        <div class="modalInner" id="modalInnerAddFruit">
             <div class="modalHeader">
                 <h2 id="addFruitModalTitle">Add a fruit!</h2>
                 <button id="closeAddFruitModal" class="closeModalButton" data-modal="addFruitModal">x</button>
@@ -88,12 +88,12 @@
     </div>
 
     <div class="modal" id="deleteFruitModal">
-        <div class="modalInner">
+        <div class="modalInner" id="modalInnerDeleteFruit">
             <div class="modalHeader">
                 <h2 id="deleteFruitModalTitle">Delete a fruit</h2>
                 <button id="closeDeleteFruitModal" class="closeModalButton" data-modal="deleteFruitModal">x</button>
             </div>
-            <form>
+            <form id="deleteFruitForm">
                 <div>
                     <label for="deleteFruitNameInput" class="deleteFruitInputLabel">Fruit Name: </label>
                     <input id="deleteFruitNameInput" class="inputField">
@@ -102,7 +102,7 @@
                     <label for="deleteFruitPasswordInput" class="deleteFruitInputLabel">Password: </label>
                     <input  id="deleteFruitPasswordInput" class="inputField">
                 </div>
-                <input type="submit" id="deleteFruitSubmit">
+                <input type="submit" id="deleteFruitSubmit" value="Delete">
             </form>
         </div>
     </div>
