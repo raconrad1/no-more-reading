@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("searchSubmit").addEventListener("click", searchFruits);
     document.getElementById("addFruitSubmit").addEventListener("click", addFruit);
     document.getElementById("openAddFruitModal").addEventListener("click", openModal);
-    document.getElementById("closeAddFruitModal").addEventListener("click", closeModal);
+    document.getElementById("closeAddFruitModal").addEventListener("click", () => closeModal("addFruitModal"));
     document.getElementById("openDeleteFruitModal").addEventListener("click", openModal);
-    document.getElementById("closeDeleteFruitModal").addEventListener("click", closeModal);
+    document.getElementById("closeDeleteFruitModal").addEventListener("click", () => closeModal("deleteFruitModal"));
     document.getElementById("deleteFruitSubmit").addEventListener("click", deleteFruit);
 });
 
@@ -158,7 +158,6 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-
 // Close modals by clicking outside of modal inner
 document.querySelectorAll(".modal").forEach(modal => {
     modal.addEventListener("click", (event) => {
@@ -173,7 +172,7 @@ document.querySelectorAll(".fruitIcon").forEach(icon => {
     icon.addEventListener("click", async function () {
         document.getElementById("searchInput").value = this.id;
         await searchFruits(event);
-    })
+    });
 });
 
 // Invalid search error display
@@ -213,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Delete fruit
 async function deleteFruit(event) {
     event.preventDefault();
     const fruit = document.getElementById("deleteFruitNameInput").value.trim();
