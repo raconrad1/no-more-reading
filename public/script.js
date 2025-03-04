@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("closeAddFruitModal").addEventListener("click", closeModal);
     document.getElementById("openDeleteFruitModal").addEventListener("click", openModal);
     document.getElementById("closeDeleteFruitModal").addEventListener("click", closeModal);
+    document.getElementById("deleteFruitSubmit").addEventListener("click", deleteFruit);
 });
 
 // Hides the whole table including headers
@@ -121,7 +122,7 @@ async function addFruit(event) {
     })
 
     const fruit = await response.json();
-    closeModal();
+    closeModal("addFruitModal");
     document.getElementById("searchInput").value = name;
     await searchFruits(event);
     // alert(fruit.message || "Error adding fruit");
@@ -143,10 +144,20 @@ function openModal(event) {
 }
 
 // Close any modal using data-modal value in html
-function closeModal(event) {
-    const modalId = event.target.getAttribute("data-modal");
-    document.getElementById(modalId).classList.remove("open");
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove("open");
+    }
 }
+
+// Close modals with esc
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        document.querySelectorAll(".modal.open").forEach(modal => closeModal(modal.id));
+    }
+});
+
 
 // Close modals by clicking outside of modal inner
 document.querySelectorAll(".modal").forEach(modal => {
@@ -201,3 +212,41 @@ document.addEventListener("DOMContentLoaded", function () {
         rows.forEach(row => tbody.appendChild(row)); // Reinsert sorted rows
     });
 });
+
+async function deleteFruit(event) {
+    event.preventDefault();
+    const fruit = document.getElementById("deleteFruitNameInput").value.trim();
+    const passwordInput = document.getElementById("deleteFruitPasswordInput").value.trim();
+    const password = "soup";
+
+    if (!fruit || !passwordInput) {
+        console.log("Fields cannot be empty");
+        return;
+    }
+
+    if (passwordInput !== password) {
+        console.log("Incorrect password");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/fruits/delete/${encodeURIComponent(fruit)}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || `Failed to delete fruit: ${response.statusText}`);
+        }
+
+        console.log(data.message);
+        closeModal("deleteFruitModal");
+        await getFruits();
+    } catch (error) {
+        console.error("Error deleting fruit:", error);
+    }
+}
