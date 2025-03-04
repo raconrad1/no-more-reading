@@ -100,14 +100,14 @@ input::-webkit-inner-spin-button {
 
 .modalInner {
     display:flex;
-    background-color: #ffffda;
+    background-color: #e9ffe2;
     text-align: center;
     position: fixed;
     flex-direction: column;
     border-radius: 20px;
     align-items: center;
     border-style: solid;
-    border-color: #b9b9b9;
+    border-color: #bfd3b7;
     border-width: 3px;
     box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
