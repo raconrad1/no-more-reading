@@ -113,6 +113,9 @@ async function addFruit(event) {
     const carbohydrates = document.getElementById("carbohydratesInput").value;
     const protein = document.getElementById("proteinInput").value;
 
+
+    validateInputs({ name, family, order, genus }, { calories, fat, sugar, carbohydrates, protein });
+
     const response = await fetch("fruits/add", {
         method: "POST",
         headers: {
@@ -248,5 +251,33 @@ async function deleteFruit(event) {
         await getFruits();
     } catch (error) {
         console.error("Error deleting fruit:", error);
+    }
+}
+
+function isNumeric(str) {
+    if (typeof str != "string") return false
+    return !isNaN(str) &&
+        !isNaN(parseFloat(str))
+}
+
+function validateInputs(stringFields, numberFields) {
+    let errors = [];
+
+    // Validate strings
+    for (const [key, value] of Object.entries(stringFields)) {
+        if(!/^[a-zA-Z]+$/.test(value) || value === "") {
+            errors.push(`${key} must be a non empty string`);
+        }
+    }
+
+    // Validate numbers
+    for (const [key, value] of Object.entries(numberFields)) {
+        if(!isNumeric(value)) {
+            errors.push(`${key} must be a number`);
+        }
+    }
+
+    if (errors.length > 0) {
+        throw new Error(errors.join("; "));
     }
 }
