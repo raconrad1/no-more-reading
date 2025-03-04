@@ -69,12 +69,13 @@ export async function deleteFruit(name) {
             DELETE FROM fruits WHERE LOWER(name) = LOWER(?)`,
             [name]);
 
-        console.log("database says it worked", res.affectedRows);
-
         if (res.affectedRows === 0) {
             console.warn("No fruit found to delete.");
             return false;
         }
+        // console.log("database says it worked", res.affectedRows);
+        return true;
+
 
     } catch(error) {
         console.error("Error deleting fruit:", error);
