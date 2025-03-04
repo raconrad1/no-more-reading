@@ -68,8 +68,14 @@ button {
     font-size: 15px;
 }
 
+button:hover, input[type="submit"], .fruitIcon:hover {
+    cursor: pointer;
+}
+
 .mainButtons button {
-    border: none;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: lightgray;
 }
 
 .mainButtons button:hover {
@@ -84,9 +90,6 @@ label {
     margin: 0
 }
 
-#nameSortArrow, button {
-    cursor: pointer;
-}
 
 /*remove increment arrows in search field*/
 input::-webkit-outer-spin-button,
@@ -97,15 +100,16 @@ input::-webkit-inner-spin-button {
 
 .modalInner {
     display:flex;
-    background-color: lightyellow;
+    background-color: #ffffda;
     text-align: center;
     position: fixed;
     flex-direction: column;
-    border-radius: 30px;
+    border-radius: 20px;
     align-items: center;
     border-style: solid;
-    border-color: #ffdfb8;
+    border-color: #b9b9b9;
     border-width: 3px;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #modalInnerAddFruit, #addFruitForm {
@@ -161,6 +165,7 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    width: 525px;
 }
 
 .inputField {
@@ -185,9 +190,7 @@ input::-webkit-inner-spin-button {
 
 #addFruitSubmit, #deleteFruitSubmit {
     width: 35%;
-    cursor: pointer;
 }
-
 
 .modalHeader {
     display: flex;
@@ -208,8 +211,6 @@ input::-webkit-inner-spin-button {
     border-color: #bbbbbb;
 }
 
-
-
 #addFruitModalTitle, #deleteFruitModalTitle {
     flex-grow: 1;
     text-align: center;
@@ -226,7 +227,6 @@ input::-webkit-inner-spin-button {
 
 .fruitIcon:hover {
     transform: scale(1.7);
-    cursor: pointer;
     position:relative;
 }
 
