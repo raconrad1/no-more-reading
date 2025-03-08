@@ -82,3 +82,19 @@ export async function deleteFruit(name) {
         throw error;
     }
 }
+
+//Check if a fruit is already in the database
+export async function inDatabase(name) {
+    try {
+        const [res] = await pool.query(`
+        SELECT EXISTS (
+        SELECT 1 FROM fruits WHERE LOWER(name) = ?)
+        AS is_present`, [name]);
+
+
+        return res[0];
+    } catch(error) {
+        console.error("Error checking if fruit exists by name:", error);
+        throw error;
+    }
+}
