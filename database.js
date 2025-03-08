@@ -29,7 +29,7 @@ export async function searchFruit(query) {
         SELECT *
         FROM fruits
         WHERE id = ?
-           OR LOWER(name) = LOWER(?)
+           OR LOWER(name) LIKE CONCAT('%', ?, '%')
            OR LOWER(family) = LOWER(?)
            OR LOWER(\`order\`) = LOWER(?)
            OR LOWER(genus) = LOWER(?)
