@@ -281,3 +281,13 @@ function validateInputs(stringFields, numberFields) {
         throw new Error(errors.join("; "));
     }
 }
+
+function isDuplicate(name) {
+    const response = fetch(`/fruits/check/${name}`);
+    if(response.is_present === 1) {
+        console.log("it's a duplicate");
+        return;
+    }
+    console.log("it's not a duplicate");
+    return;
+}
