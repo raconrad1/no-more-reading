@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, searchFruit, addFruit, deleteFruit} from "./database.js";
+import {getFruits, getRandomFruit, searchFruit, addFruit, deleteFruit, inDatabase} from "./database.js";
 import path from "path";
 
 // Creates the express app
@@ -87,6 +87,18 @@ app.delete("/fruits/delete/:fruit", async (req, res) => {
     } catch(error) {
         console.error("Error deleting fruit:", error.message);
         res.status(500).send( {error : "Internal server error"});
+    }
+})
+
+// Check if fruit is in database from name
+app.get("/fruits/check/:name", async (req, res) => {
+    const name = req.params.name.trim()
+    try {
+        const result = await inDatabase(name);
+        res.send(result);
+    } catch(error) {
+        console.error("Error checking if fruit is in database:", error.message);
+        res.status(500).send( { error: "Internal server error" } );
     }
 })
 
