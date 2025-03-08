@@ -116,7 +116,7 @@ async function addFruit(event) {
 
     try {
         await isDuplicate(name);
-        console.log("Fruit is unique, proceed with insertion.");
+        console.log("not a duplicate!");
     } catch (error) {
         console.error(error.message);
         return;
