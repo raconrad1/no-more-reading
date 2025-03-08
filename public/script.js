@@ -114,6 +114,14 @@ async function addFruit(event) {
     const protein = document.getElementById("proteinInput").value;
 
 
+    try {
+        await isDuplicate(name);
+        console.log("Fruit is unique, proceed with insertion.");
+    } catch (error) {
+        console.error(error.message);
+        return;
+    }
+
     validateInputs({ name, family, order, genus }, { calories, fat, sugar, carbohydrates, protein });
 
     const response = await fetch("fruits/add", {
@@ -282,12 +290,13 @@ function validateInputs(stringFields, numberFields) {
     }
 }
 
-function isDuplicate(name) {
-    const response = fetch(`/fruits/check/${name}`);
-    if(response.is_present === 1) {
-        console.log("it's a duplicate");
-        return;
+async function isDuplicate(name) {
+    const response = await fetch(`/fruits/check/${name}`);
+    if (!response.ok) throw new Error("Network response was not ok");
+    const data = await response.json();
+    const result = data.is_present;
+
+    if (result === 1) {
+        throw new Error("You cannot enter a fruit that is already in the database")
     }
-    console.log("it's not a duplicate");
-    return;
 }
