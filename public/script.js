@@ -238,11 +238,13 @@ async function deleteFruit(event) {
 
     if (!fruit || !passwordInput) {
         console.log("Fields cannot be empty");
+        alert("Fields cannot be empty");
         return;
     }
 
     if (passwordInput !== password) {
         console.log("Incorrect password");
+        alert("Incorrect password");
         return;
     }
 
@@ -265,6 +267,7 @@ async function deleteFruit(event) {
         await getFruits();
     } catch (error) {
         console.error("Error deleting fruit:", error);
+        alert("Error deleting fruit. Check that the fruit you want to delete is in the database.");
     }
 }
 
