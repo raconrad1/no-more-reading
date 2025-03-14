@@ -219,31 +219,31 @@ function showSearchError(error) {
     }, 3000);
 }
 
-// Another try at the search arrow
-document.addEventListener("DOMContentLoaded", function () {
-    const table = document.getElementById("fullTable");
-    const tbody = document.getElementById("fruitTable");
-    const nameHeader = document.getElementById("nameSortArrow");
-
-    let ascending = true; // Track sorting order
-
-    nameHeader.addEventListener("click", function () {
-        let rows = Array.from(tbody.querySelectorAll("tr"));
-
-        rows.sort((rowA, rowB) => {
-            let cellA = rowA.cells[1].textContent.trim().toLowerCase();
-            let cellB = rowB.cells[1].textContent.trim().toLowerCase();
-
-            return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-        });
-
-        ascending = !ascending; // Toggle sorting order
-        nameHeader.textContent = ascending ? "↑" : "↓"; // Update sort indicator
-
-        tbody.innerHTML = ""; // Clear table body
-        rows.forEach(row => tbody.appendChild(row)); // Reinsert sorted rows
-    });
-});
+// // Sort arrow that I gave up on
+// document.addEventListener("DOMContentLoaded", function () {
+//     const table = document.getElementById("fullTable");
+//     const tbody = document.getElementById("fruitTable");
+//     const nameHeader = document.getElementById("nameSortArrow");
+//
+//     let ascending = true; // Track sorting order
+//
+//     nameHeader.addEventListener("click", function () {
+//         let rows = Array.from(tbody.querySelectorAll("tr"));
+//
+//         rows.sort((rowA, rowB) => {
+//             let cellA = rowA.cells[1].textContent.trim().toLowerCase();
+//             let cellB = rowB.cells[1].textContent.trim().toLowerCase();
+//
+//             return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+//         });
+//
+//         ascending = !ascending; // Toggle sorting order
+//         nameHeader.textContent = ascending ? "↑" : "↓"; // Update sort indicator
+//
+//         tbody.innerHTML = ""; // Clear table body
+//         rows.forEach(row => tbody.appendChild(row)); // Reinsert sorted rows
+//     });
+// });
 
 // Delete fruit
 async function deleteFruit(event) {

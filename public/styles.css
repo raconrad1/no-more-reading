@@ -88,14 +88,6 @@ label {
     margin: 0
 }
 
-
-/*remove increment arrows in search field*/
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 .modalInner {
     display:flex;
     background-color: #e9ffe2;
