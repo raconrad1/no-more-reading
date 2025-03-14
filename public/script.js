@@ -280,19 +280,20 @@ function validateInputs(stringFields, numberFields) {
     // Validate strings
     for (const [key, value] of Object.entries(stringFields)) {
         if(!/^[a-zA-Z]+$/.test(value) || value === "") {
-            errors.push(`${key} must be a non empty string`);
+            errors.push(`${key.toUpperCase()} must be a non empty string.`);
         }
     }
 
     // Validate numbers
     for (const [key, value] of Object.entries(numberFields)) {
         if(!isNumeric(value)) {
-            errors.push(`${key} must be a number`);
+            errors.push(`${key.toUpperCase()} must be a number.`);
         }
     }
 
     if (errors.length > 0) {
-        throw new Error(errors.join("; "));
+        alert(errors.join("\n"));
+        throw new Error(errors.join("\n"));
     }
 }
 
