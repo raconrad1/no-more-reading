@@ -9,8 +9,8 @@ h1 {
 
 
 #pageTitle {
-    font-family: Serif, sans-serif;
-    font-size: xxx-large;
+    font-family: Georgia, sans-serif;
+    font-size: 2.6rem;
 }
 
 
@@ -209,7 +209,7 @@ input::-webkit-inner-spin-button {
 .closeModalButton {
     position: absolute;
     right: 15px;
-    margin-right: 20px;
+    margin-right: 30px;
     padding: 3px 6px 3px 6px;
     border-radius: 7px;
     border-style: solid;
