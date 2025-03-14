@@ -35,7 +35,7 @@ function updateTable(fruits) {
         tableBody.innerHTML += row;
 
     });
-    clearSearchFields();
+    clearInputFields();
     fullTable.style.display = "";
 }
 
@@ -140,9 +140,15 @@ async function addFruit(event) {
 }
 
 // Clear the search field
-function clearSearchFields() {
+function clearInputFields() {
     const searchFields = document.querySelectorAll(".searchField");
     searchFields.forEach(field => {
+        field.value = "";
+        field.blur();
+    });
+
+    const inputFields = document.querySelectorAll(".inputField");
+    inputFields.forEach(field => {
         field.value = "";
         field.blur();
     });
@@ -191,7 +197,7 @@ function showSearchError(error) {
     const message = document.getElementById("searchErrorMessage");
     message.textContent = error;
     message.style.visibility = "visible";
-    clearSearchFields();
+    clearInputFields();
     setTimeout(() => {
         message.style.visibility = "hidden";
     }, 3000);
