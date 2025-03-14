@@ -99,6 +99,22 @@ async function searchFruits(event) {
     }
 }
 
+async function getFruitByName(name) {
+    try {
+        const response = await fetch(`fruits/name/${name}`);
+        if (!response.ok) {
+            showSearchError("Fruit not found");
+            throw new Error(`failed to fetch fruit ${response.statusText}`);
+        }
+
+        const fruit = await response.json();
+        const fruitArray = Array.isArray(fruit) ? fruit : [fruit];
+        updateTable(fruitArray);
+    } catch (error) {
+        console.error("Error fetching fruit", error);
+    }
+}
+
 // Add fruit via modal window
 async function addFruit(event) {
     event.preventDefault();
@@ -134,9 +150,9 @@ async function addFruit(event) {
 
     const fruit = await response.json();
     closeModal("addFruitModal");
-    document.getElementById("searchInput").value = name;
-    await searchFruits(event);
-    // alert(fruit.message || "Error adding fruit");
+    await getFruitByName(name);
+    // document.getElementById("searchInput").value = name;
+    // await searchFruits(event);
 }
 
 // Clear the search field
@@ -188,7 +204,7 @@ document.querySelectorAll(".modal").forEach(modal => {
 document.querySelectorAll(".fruitIcon").forEach(icon => {
     icon.addEventListener("click", async function () {
         document.getElementById("searchInput").value = this.id;
-        await searchFruits(event);
+        await getFruitByName(this.id);
     });
 });
 
@@ -279,10 +295,10 @@ function isNumeric(str) {
 
 function validateInputs(stringFields, numberFields) {
     let errors = [];
-
+    console.log([stringFields, numberFields])
     // Validate strings
     for (const [key, value] of Object.entries(stringFields)) {
-        if(!/^[a-zA-Z]+$/.test(value) || value === "") {
+        if(!/^[a-zA-Z ]+$/.test(value) || value === "") {
             errors.push(`${key.toUpperCase()} must be a non empty string.`);
         }
     }
