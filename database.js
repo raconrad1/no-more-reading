@@ -22,20 +22,29 @@ export async function getRandomFruit() {
     return res[0];
 }
 
-
 // Searches fruit by name, id, family, order, or genus
 export async function searchFruit(query) {
     const [res] = await pool.query(`
         SELECT *
         FROM fruits
         WHERE id = ?
-           OR LOWER(name) LIKE CONCAT('%', ?, '%')
+           OR LOWER(name) REGEXP CONCAT('(^| )', ?, '( |$)')
            OR LOWER(family) = LOWER(?)
            OR LOWER(\`order\`) = LOWER(?)
            OR LOWER(genus) = LOWER(?)
     `, [query, query, query, query, query, query]);
 
     return res.length ? res : null;
+}
+
+export async function getFruitByName(name) {
+    const [res] = await pool.query(`
+    SELECT *
+    FROM fruits
+    WHERE name = ?
+    `, [name]);
+
+    return res[0];
 }
 
 // Adds a fruit to the database
