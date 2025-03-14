@@ -323,6 +323,7 @@ async function isDuplicate(name) {
     const result = data.is_present;
 
     if (result === 1) {
+        alert("You cannot enter a fruit that is already in the database!");
         throw new Error("You cannot enter a fruit that is already in the database")
     }
 }
