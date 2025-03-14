@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import {getFruits, getRandomFruit, searchFruit, addFruit, deleteFruit, inDatabase} from "./database.js";
+import {getFruits, getRandomFruit, searchFruit, getFruitByName, addFruit, deleteFruit, inDatabase} from "./database.js";
 import path from "path";
 
 // Creates the express app
@@ -33,7 +33,6 @@ app.get("/fruits/random", async (req, res)=> {
     }
 })
 
-
 // Fetch fruit by search input
 app.get("/fruits/search/:query", async (req, res) => {
     const query = req.params.query.trim();
@@ -50,6 +49,18 @@ app.get("/fruits/search/:query", async (req, res) => {
         res.status(500).send({ error: "Internal server error" });
     }
 });
+
+// Fetch fruit by name (used for fruit icons and adding a fruit)
+app.get("/fruits/name/:name", async (req, res) => {
+    const name = req.params.name.trim();
+    try {
+        const fruit = await getFruitByName(name);
+        res.send(fruit);
+    } catch(error) {
+        console.error("Error fetching a fruit by name:", error.message);
+        res.status(500).send( { error: "Internal server error" });
+    }
+})
 
 // Add fruit
 app.post("/fruits/add", async (req, res) => {
