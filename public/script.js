@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("openDeleteFruitModal").addEventListener("click", openModal);
     document.getElementById("closeDeleteFruitModal").addEventListener("click", () => closeModal("deleteFruitModal"));
     document.getElementById("deleteFruitSubmit").addEventListener("click", deleteFruit);
+    windowsIcons();
 });
 
 // Hides the whole table including headers
@@ -325,5 +326,24 @@ async function isDuplicate(name) {
     if (result === 1) {
         alert("You cannot enter a fruit that is already in the database!");
         throw new Error("You cannot enter a fruit that is already in the database")
+    }
+}
+
+// Rearrange icons if the user is on windows OS
+function windowsIcons(){
+    if (navigator.userAgent.indexOf("Win")!=-1) {
+        // Three emojis are not supported by windows yet (blueberry, olive, lime) so I took them away and rearranged some others to make each side even.
+        const lime = document.getElementById("lime");
+        const blueberry = document.getElementById("blueberry");
+        const olive = document.getElementById("olive");
+        const cherry = document.getElementById("cherry");
+        const strawberry = document.getElementById("strawberry");
+        cherry.textContent = "";
+        strawberry.textContent = "";
+        lime.innerHTML = "&#127827";  // Change lime to strawberry
+        lime.id = "strawberry";
+        blueberry.textContent = "";
+        olive.textContent = "";
+        return "Windows"
     }
 }
