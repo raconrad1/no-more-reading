@@ -12,7 +12,7 @@ const pool = mysql.createPool( {
 
 //Returns an array of all fruit objects
 export async function getFruits() {
-    const [res] = await pool.query("2SELECT * FROM fruits");
+    const [res] = await pool.query("SELECT * FROM fruits");
     return res;
 }
 
