@@ -1,8 +1,16 @@
-This is the main folder for the project.
+Fruit Application
 
-database.js is where the server is linked with MySQL.
-This file includes functions with MySQL queries, which are then exported to app.js for use.
+The motivation for this project was to stop reading and to start implementing what I've been learning into a project, hence the name "no more reading".
 
-app.js is where the express application is created and is managed by get and post request(s) using those exported functions from database.js.
+src/ contains database.js and app.js. 
+Database.js establishes the connection between the server and the MySql database (MariaDB used so it could be accessed through the cloud). This file also has MySql queries that are exported for use in app.js.
+App.js creates an Express application, and manages GET and POST requests by utilizing the queries imported from database.js.
 
-public folder contains the front end interface
+public/ contains the front end interface
+
+Heroku was used to deploy the project to the cloud. The link can be found below.
+https://fruits-app-2eee9c92b620.herokuapp.com/
+
+The original set of fruit data was taken from https://www.fruityvice.com/
+
+This project is intended for learning purposes. Contributions are welcome to enhance its functionality and educational value.
